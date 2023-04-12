@@ -17,7 +17,6 @@ from gui.usefulwidget import getQMessageBox
 def __changeuibuttonstate(self,x):  
                 self.object.translation_ui.refreshtoolicon()
                 self.show_hira_switch .setEnabled(x)
-                self.pad_kanji_switch .setEnabled(x)
                 self.show_fenciswitch .setEnabled(x) 
 def __changekanjibuttonstate(self,x):  
                 self.object.translation_ui.refreshtoolicon()
