@@ -7,6 +7,7 @@ import functools ,time
 from utils.config import globalconfig
 from utils.wrapper import timer
 from traceback import print_exc
+import math
 class Qlabel_c(QLabel):
     
     def mousePressEvent(self, ev   )  :
@@ -172,12 +173,16 @@ class Textbrowser( ):
         #self.shadowlabel.setAlignment(Qt.AlignTop )
      
     def append(self,x ,tag ): 
+        fullheight,_font=self.getfh(False)
+        halfheight,_font=self.getfh(True)
         if globalconfig['pad_kanji'] and len(tag)>0:
             #print(f"x was {x}")
             ori=""
             for _ in tag:
-                lenDiff=len(_["hira"])-len(_["orig"])
-                if lenDiff>0:
+                lenDiff=halfheight*len(_["hira"])/fullheight-len(_["orig"])
+                #print(f"lenDiff is {lenDiff}")
+                if lenDiff>0.2:
+                    lenDiff=math.floor(lenDiff)+1
                     _["orig"]="  "*((lenDiff+1)//2)+_["orig"]+"  "*((lenDiff+1)//2)
                 ori+=_["orig"]
             x=ori
@@ -195,7 +200,7 @@ class Textbrowser( ):
             
             self.addtaged=False
               
-            fh,_=self.getfh(False)
+            fh=fullheight
               
             for i in range(self.blockcount, self.textbrowser.document().blockCount()):
                 b=self.textbrowser.document().findBlockByNumber(i) 
