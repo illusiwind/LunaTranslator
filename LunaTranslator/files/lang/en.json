@@ -80,6 +80,7 @@
     "彩云api": "Caiyun API",
     "录制翻译文件": "Recording Translation Files",
     "显示假名": "Show Kana",
+	"汉字按假名调整宽度": "Pad Kanji to match Kana width",
     "显示显示原文按钮": "Show Show Original Text Button",
     "接尾辞": "suffix",
     "有道4": "Youdao 4",
@@ -569,5 +570,6 @@
     "Magpie9_win7适配版": "Magpie9_ Win7 adaptation version",
     "相关说明": "Related instructions",
     "问题反馈_QQ群": "Problem feedback_ QQ group",
-    "如果你感觉该软件对你有帮助，欢迎微信扫码赞助，谢谢~": "If you feel that this software is helpful to you, you are welcome to scan WeChat for sponsorship. Thank you~"
+    "如果你感觉该软件对你有帮助，欢迎微信扫码赞助，谢谢~": "If you feel that this software is helpful to you, you are welcome to scan WeChat for sponsorship. Thank you~",
+    "汉字按假名调整宽度": ""
 }
