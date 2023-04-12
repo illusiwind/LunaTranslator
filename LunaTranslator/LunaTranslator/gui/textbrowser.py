@@ -172,7 +172,16 @@ class Textbrowser( ):
         #self.shadowlabel.setAlignment(Qt.AlignTop )
      
     def append(self,x ,tag ): 
-        
+        if globalconfig['pad_kanji'] and len(tag)>0:
+            #print(f"x was {x}")
+            ori=""
+            for _ in tag:
+                lenDiff=len(_["hira"])-len(_["orig"])
+                if lenDiff>0:
+                    _["orig"]="  "*((lenDiff+1)//2)+_["orig"]+"  "*((lenDiff+1)//2)
+                ori+=_["orig"]
+            x=ori
+        #print(f"now x is {x}")
         if self.cleared:
             self.b1=0
         else:
@@ -182,7 +191,6 @@ class Textbrowser( ):
             self.textbrowserback.append(x) 
         self.textbrowser.append(x) 
         self.b2=self.textbrowser.document().blockCount()
-        
         if   self.addtaged:
             
             self.addtaged=False
@@ -201,7 +209,7 @@ class Textbrowser( ):
                 self.textcursor.setPosition(b.position()) 
                 self.textcursor.setBlockFormat(tf)
                 self.textbrowser.setTextCursor(self.textcursor) 
-        
+                
         if len(tag)>0:
             self.addtag(tag)
 
@@ -213,6 +221,7 @@ class Textbrowser( ):
                 self.atback2.move(0,self.savey ) 
                 self.textbrowserback.move(0,self.savey)  
                 self.jiaming_y_delta=0
+                
     def showyinyingtext(self,color ):   
          
         linei=self.yinyingposline
@@ -451,8 +460,12 @@ class Textbrowser( ):
             tl2=self.textbrowser.cursorRect(self.textcursor).topLeft() 
             if word['hira']==word['orig']:
                 continue
+            #print(f"Hira:{word['hira']}, Hira length: {len(word['hira'])}, Orig: {word['orig']} Orig length: {len(word['orig'])}.")
+            lenDiff=len(word['hira'])-len(word['orig'])
+            if lenDiff>0:
+                word['orig']='a'*(lenDiff//2)+word['orig']+'b'*((lenDiff+1)//2)
+                #print(f"Updated Orig: {word['orig']}")
             #print(tl1,tl2,word['hira'],self.textbrowser.textCursor().position())
-            
             self.solvejiaminglabel(self.savetaglabels,labeli,word,fonthira,tl1,tl2,fhhalf)
             
             labeli+=1 
@@ -505,7 +518,7 @@ class Textbrowser( ):
                                 newline[-1]['hira']+=word['hira']
                                 newline[-1]['orig']+=word['orig']
                                 newline[-1]['hira_w']+=word['hira_w']
-                                newline[-1]['orig_w']+=word['orig_w']
+                                newline[-1]['orig_w']+=max(word['orig_w'],word['hira_w'])
                                 allnotbig=False
                         else:
                             newline.append(word.copy())

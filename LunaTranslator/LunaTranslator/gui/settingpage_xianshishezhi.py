@@ -17,12 +17,17 @@ from gui.usefulwidget import getQMessageBox
 def __changeuibuttonstate(self,x):  
                 self.object.translation_ui.refreshtoolicon()
                 self.show_hira_switch .setEnabled(x)
+                self.pad_kanji_switch .setEnabled(x)
                 self.show_fenciswitch .setEnabled(x) 
+def __changekanjibuttonstate(self,x):  
+                self.object.translation_ui.refreshtoolicon()
+                self.pad_kanji_switch .setEnabled(x)
 def setTabThree_direct(self):
         self.fontSize_spinBox=self.getspinbox(1,100,globalconfig,'fontsize',double=True,step=0.1 )
         self.fontbigsmallsignal.connect(lambda t:self.fontSize_spinBox.setValue(self.fontSize_spinBox.value()+0.5*t))
         self.show_original_switch=self.getsimpleswitch(globalconfig,'isshowrawtext',callback=lambda x: __changeuibuttonstate(self,x))
-        self.show_hira_switch=self.getsimpleswitch(globalconfig,'isshowhira',enable=globalconfig['isshowrawtext'])
+        self.show_hira_switch=self.getsimpleswitch(globalconfig,'isshowhira',enable=globalconfig['isshowrawtext'],callback=lambda x: __changekanjibuttonstate(self,x))
+        self.pad_kanji_switch=self.getsimpleswitch(globalconfig,'pad_kanji',enable=globalconfig['isshowhira'])
         self.show_fenciswitch=self.getsimpleswitch(globalconfig,'show_fenci',enable=globalconfig['isshowrawtext'])
  
 def setTabThree(self) :
@@ -90,7 +95,7 @@ def setTabThree_lazy(self) :
                 
                 [('显示原文',4),self.show_original_switch,'',('原文颜色',4), self.getcolorbutton(globalconfig,'rawtextcolor',callback=lambda: self.ChangeTranslateColor("rawtextcolor", self.original_color_button),name='original_color_button')],
                 [('显示假名',4),self.show_hira_switch,'',('假名颜色',4),self.getcolorbutton(globalconfig,'jiamingcolor',callback=lambda: self.ChangeTranslateColor("jiamingcolor", self.jiamingcolor_b),name='jiamingcolor_b'),'',('假名字体缩放',3),(self.getspinbox(0.05,1,globalconfig,'kanarate',double=True,step=0.05,dec=2),2)],  
-                [('语法加亮',4 ),self.show_fenciswitch,'',
+                [('汉字按假名调整宽度',4),self.pad_kanji_switch,'',('语法加亮',4 ),self.show_fenciswitch,'',
                  ('词性颜色(需要Mecab)',4), self.getcolorbutton(globalconfig,'',callback=lambda  : multicolorset(self),icon='fa.gear',constcolor="#FF69B4") ,],
                 [("显示翻译器名称",4),(self.getsimpleswitch(globalconfig  ,'showfanyisource'),1)],
                 [''],

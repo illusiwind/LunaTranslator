@@ -63,6 +63,7 @@
     "rawtextcolor": "#000000",
     "backcolor": "#3f3f3f",
     "isshowhira": false,
+	"pad_kanji": false,
     "locktools": true,
     "showfanyisource": false,
     "autoread": false,
