@@ -183,7 +183,7 @@ class Textbrowser( ):
                 #print(f"lenDiff is {lenDiff}")
                 if lenDiff>0.2:
                     lenDiff=math.floor(lenDiff)+1
-                    _["orig"]="  "*((lenDiff+1)//2)+_["orig"]+"  "*((lenDiff+1)//2)
+                    _["orig"]=" "*lenDiff+_["orig"]+" "*lenDiff
                 ori+=_["orig"]
             x=ori
         #print(f"now x is {x}")
