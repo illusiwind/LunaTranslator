@@ -1,6 +1,6 @@
 set targetdir=..\build\Lunatranslator
 set targetdir_in=..\build\Lunatranslator\LunaTranslator
-set pythonlib=%LOCALAPPDATA%\Programs\Python\Python37\Lib
+set pythonlib=%LOCALAPPDATA%\Programs\Python\Python38\Lib
 set pythonpackage=%pythonlib%\site-packages
 
 rmdir /S /Q %targetdir%
