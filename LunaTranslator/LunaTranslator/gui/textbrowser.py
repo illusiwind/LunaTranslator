@@ -456,7 +456,8 @@ class Textbrowser( ):
                 self.atback2.move(0,self.savey+fhhalf-tl1 ) 
                 self.textbrowserback.move(0,self.savey+fhhalf-tl1 )  
                 self.jiaming_y_delta=fhhalf-tl1
-        x=self.nearmerge(x,pos,fonthira,fontorig) 
+        if not globalconfig['pad_kanji']:
+            x=self.nearmerge(x,pos,fonthira,fontorig) 
         self.settextposcursor(pos)
         for word in x:
             if word['orig']=='\n':
