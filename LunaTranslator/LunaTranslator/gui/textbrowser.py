@@ -173,15 +173,12 @@ class Textbrowser( ):
         #self.shadowlabel.setAlignment(Qt.AlignTop )
      
     def append(self,x ,tag ): 
-        fullheight,_font=self.getfh(False)
-        halfheight,_font=self.getfh(True)
-        spaceWidthRatio=self.getWidth(' ',False)
         if globalconfig['pad_kanji'] and len(tag)>0:
             #print(f"x was {x}")
             ori=""
             for _ in tag:
                 padSpace=(self.getWidth(_["hira"],True)-self.getWidth(_["orig"],False))/self.getWidth(' ',False)
-                #print(f'hira width is {self.getWidth(_["hira"],True)}, kanja width is {self.getWidth(_["orig"],False)} padSpace is {padSpace}')
+                #print(f'hira width is {self.getWidth(_["hira"],True)}, kanji width is {self.getWidth(_["orig"],False)} padSpace is {padSpace}')
                 if padSpace>0.2:
                     padSpace=math.ceil(padSpace+0.8)//2
                     _["orig"]=" "*padSpace+_["orig"]+" "*padSpace
@@ -201,7 +198,7 @@ class Textbrowser( ):
             
             self.addtaged=False
               
-            fh=fullheight
+            fh,_=self.getfh(False)
               
             for i in range(self.blockcount, self.textbrowser.document().blockCount()):
                 b=self.textbrowser.document().findBlockByNumber(i) 
