@@ -7,7 +7,6 @@ import functools ,time
 from utils.config import globalconfig
 from utils.wrapper import timer
 from traceback import print_exc
-import math
 class Qlabel_c(QLabel):
     
     def mousePressEvent(self, ev   )  :
@@ -180,7 +179,7 @@ class Textbrowser( ):
                 padSpace=(self.getWidth(_["hira"],True)-self.getWidth(_["orig"],False))/self.getWidth(' ',False)
                 #print(f'hira width is {self.getWidth(_["hira"],True)}, kanji width is {self.getWidth(_["orig"],False)} padSpace is {padSpace}')
                 if padSpace>0.2:
-                    padSpace=math.ceil(padSpace+0.8)//2
+                    padSpace=int(padSpace+1.8)//2
                     _["orig"]=" "*padSpace+_["orig"]+" "*padSpace
                 ori+=_["orig"]
             x=ori
