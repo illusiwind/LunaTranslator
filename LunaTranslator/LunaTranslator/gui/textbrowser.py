@@ -175,18 +175,19 @@ class Textbrowser( ):
     def append(self,x ,tag ): 
         fullheight,_font=self.getfh(False)
         halfheight,_font=self.getfh(True)
+        spaceWidthRatio=self.getWidth(' ',False)
         if globalconfig['pad_kanji'] and len(tag)>0:
             #print(f"x was {x}")
             ori=""
             for _ in tag:
-                lenDiff=halfheight*len(_["hira"])/fullheight-len(_["orig"])
-                #print(f"lenDiff is {lenDiff}")
-                if lenDiff>0.2:
-                    lenDiff=math.floor(lenDiff)+1
-                    _["orig"]=" "*lenDiff+_["orig"]+" "*lenDiff
+                padSpace=(self.getWidth(_["hira"],True)-self.getWidth(_["orig"],False))/self.getWidth(' ',False)
+                #print(f'hira width is {self.getWidth(_["hira"],True)}, kanja width is {self.getWidth(_["orig"],False)} padSpace is {padSpace}')
+                if padSpace>0.2:
+                    padSpace=math.ceil(padSpace+0.8)//2
+                    _["orig"]=" "*padSpace+_["orig"]+" "*padSpace
                 ori+=_["orig"]
             x=ori
-        #print(f"now x is {x}")
+            #print(f"now x is {x}")
         if self.cleared:
             self.b1=0
         else:
@@ -411,7 +412,16 @@ class Textbrowser( ):
         
         return fhall,font
         
-     
+    def getWidth(self,text,kana):
+        font=QFont()
+        font.setFamily(globalconfig['fonttype']) 
+        if kana:
+            font.setPointSizeF(globalconfig['fontsize'] * globalconfig['kanarate'])
+        else:
+            font.setPointSizeF(globalconfig['fontsize'])
+        fm=QFontMetricsF(font)
+        return fm.horizontalAdvance(text)
+    
     def addtag(self,x):  
         if len(self.savetaglabels)<len(x):
             self.savetaglabels+=[QLabel(self.parent) for i in range(len(x)-len(self.savetaglabels))]
@@ -465,11 +475,6 @@ class Textbrowser( ):
             tl2=self.textbrowser.cursorRect(self.textcursor).topLeft() 
             if word['hira']==word['orig']:
                 continue
-            #print(f"Hira:{word['hira']}, Hira length: {len(word['hira'])}, Orig: {word['orig']} Orig length: {len(word['orig'])}.")
-            lenDiff=len(word['hira'])-len(word['orig'])
-            if lenDiff>0:
-                word['orig']='a'*(lenDiff//2)+word['orig']+'b'*((lenDiff+1)//2)
-                #print(f"Updated Orig: {word['orig']}")
             #print(tl1,tl2,word['hira'],self.textbrowser.textCursor().position())
             self.solvejiaminglabel(self.savetaglabels,labeli,word,fonthira,tl1,tl2,fhhalf)
             
